@@ -1,6 +1,8 @@
 const express = require("express");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 const router = express.Router();
+require("dotenv").config();
 
 const {
   userValidationRules,
@@ -31,7 +33,21 @@ router.post("/", userValidationRules(), validate, async (req, res) => {
 
     await user.save();
 
-    return res.json({ msg: "user saved" });
+    const payload = {
+      user: {
+        id: user.id
+      }
+    };
+
+    jwt.sign(
+      payload,
+      process.env.JWT_SECRET,
+      { expiresIn: 360000 },
+      (err, token) => {
+        if (err) throw err;
+        res.json({ token });
+      }
+    );
   } catch (err) {
     console.error(err.message);
     return res.status(500).json({ msg: "Server Error" });
