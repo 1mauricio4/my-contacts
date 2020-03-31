@@ -5,7 +5,7 @@ const router = express.Router();
 require("dotenv").config();
 
 const {
-  userValidationRules,
+  userRegistrationRules,
   validate
 } = require("../validators/userValidator");
 
@@ -14,7 +14,7 @@ const User = require("../models/User");
 // @route   POST /api/users
 // @desc    Register a user
 // @access  Public
-router.post("/", userValidationRules(), validate, async (req, res) => {
+router.post("/", userRegistrationRules(), validate, async (req, res) => {
   const { name, email, password } = req.body;
 
   try {
@@ -45,7 +45,7 @@ router.post("/", userValidationRules(), validate, async (req, res) => {
       { expiresIn: 360000 },
       (err, token) => {
         if (err) throw err;
-        res.json({ token });
+        return res.json({ token });
       }
     );
   } catch (err) {
