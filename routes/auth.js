@@ -5,14 +5,21 @@ const router = express.Router();
 require("dotenv").config();
 
 const { userLoginRules, validate } = require("../validators/userValidator");
+const auth = require("../middleware/auth");
 
 const User = require("../models/User");
 
 // @route   GET /api/auth
 // @desc    Get logged in user
 // @access  Private
-router.get("/", (req, res) => {
-  res.json({ msg: "Get logged in user" });
+router.get("/", auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select("-password");
+    return res.status(200).json(user);
+  } catch (err) {
+    console.error(err);
+    return res.send(500).json({ msg: "Server Error" });
+  }
 });
 
 // @route   POST /api/auth
