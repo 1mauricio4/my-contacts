@@ -10,10 +10,10 @@ import {
   CLEAR_CURRENT,
   UPDATE_CONTACT,
   FILTER_CONTACTS,
-  CLEAR_FILTER
+  CLEAR_FILTER,
 } from "../types";
 
-const ContactState = props => {
+const ContactState = (props) => {
   const initialState = {
     contacts: [
       {
@@ -21,48 +21,48 @@ const ContactState = props => {
         name: "Ted Johnson",
         email: "tjohnson@gmail.com",
         phone: "555-333-4444",
-        type: "personal"
+        type: "personal",
       },
       {
         id: 2,
         name: "Sea Lion",
         email: "sl@slr.com",
         phone: "555-999-7777",
-        type: "professional"
+        type: "professional",
       },
       {
         id: 3,
         name: "Pandah",
         email: "pandah@bi.com",
         phone: "555-555-8888",
-        type: "professional"
-      }
+        type: "professional",
+      },
     ],
-    current: null
+    current: null,
   };
 
   const [state, dispatch] = useReducer(contactReducer, initialState);
 
   // Add contact
-  const addContact = contact => {
+  const addContact = (contact) => {
     contact.id = uuid();
 
     dispatch({
       type: ADD_CONTACT,
-      payload: contact
+      payload: contact,
     });
   };
 
   // Delete contact
-  const deleteContact = id => {
+  const deleteContact = (id) => {
     dispatch({
       type: DELETE_CONTACT,
-      payload: id
+      payload: id,
     });
   };
 
   // Set current contact
-  const setCurrent = contact => {
+  const setCurrent = (contact) => {
     dispatch({ type: SET_CURRENT, payload: contact });
   };
 
@@ -72,6 +72,12 @@ const ContactState = props => {
   };
 
   // Update contact
+  const updateContact = (contact) => {
+    dispatch({
+      type: UPDATE_CONTACT,
+      payload: contact,
+    });
+  };
 
   // Filter contacts
 
@@ -85,7 +91,8 @@ const ContactState = props => {
         addContact,
         deleteContact,
         setCurrent,
-        clearCurrent
+        clearCurrent,
+        updateContact,
       }}
     >
       {props.children}
