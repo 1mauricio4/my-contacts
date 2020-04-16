@@ -27,7 +27,7 @@ const ContactFilter = () => {
         ref={text}
         type="text"
         placeholder="Filter Contacts..."
-        onChnage={onChange}
+        onChange={onChange}
       />
     </form>
   );
