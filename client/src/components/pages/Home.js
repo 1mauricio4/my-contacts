@@ -9,10 +9,12 @@ import AuthContext from '../../context/auth/authContext';
 const Home = () => {
   const authContext = useContext(AuthContext);
 
-  const { loadUser } = authContext;
+  const { loadUser, isAuthenticated } = authContext;
 
   useEffect(() => {
-    loadUser();
+    if (isAuthenticated) {
+      loadUser();
+    }
     // eslint-disable-next-line
   }, []);
 
